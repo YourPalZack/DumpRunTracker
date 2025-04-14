@@ -10,6 +10,7 @@ import { DumpRunDetailModal } from "@/components/modals/dump-run-detail-modal";
 import { RequestPickupModal } from "@/components/modals/request-pickup-modal";
 import { useAuth } from "@/hooks/use-auth";
 import { Plus, Loader2, Recycle, ArrowRight, Calendar, MessageCircle, Truck } from "lucide-react";
+import { DumpRun, DumpSite } from "@shared/schema";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -20,20 +21,20 @@ export default function HomePage() {
 
   // Fetch active dump runs
   const {
-    data: dumpRuns = [],
+    data: dumpRuns = [] as DumpRun[],
     isLoading: isLoadingRuns,
     error: runsError,
-  } = useQuery({
+  } = useQuery<DumpRun[]>({
     queryKey: ["/api/dump-runs"],
     enabled: !!user,
   });
 
   // Fetch dump sites
   const {
-    data: dumpSites = [],
+    data: dumpSites = [] as DumpSite[],
     isLoading: isLoadingSites,
     error: sitesError,
-  } = useQuery({
+  } = useQuery<DumpSite[]>({
     queryKey: ["/api/dump-sites"],
     enabled: !!user,
   });
