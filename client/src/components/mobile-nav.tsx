@@ -1,10 +1,8 @@
 import { Link, useLocation } from "wouter";
 import { Home, List, Calendar, User } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
 
 export function MobileNav() {
   const [location] = useLocation();
-  const { user } = useAuth();
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 z-40">
@@ -16,41 +14,26 @@ export function MobileNav() {
           active={location === "/"} 
         />
         
-        {user ? (
-          <>
-            <NavItem 
-              href="/my-runs" 
-              icon={<List className="h-5 w-5" />} 
-              label="My Runs" 
-              active={location === "/my-runs"} 
-            />
-            
-            <NavItem 
-              href="/schedule" 
-              icon={<Calendar className="h-5 w-5" />} 
-              label="Schedule" 
-              active={location === "/schedule"} 
-            />
-            
-            <NavItem 
-              href="/profile" 
-              icon={<User className="h-5 w-5" />} 
-              label="Profile" 
-              active={location === "/profile"} 
-            />
-          </>
-        ) : (
-          <>
-            <NavItem 
-              href="/auth" 
-              icon={<User className="h-5 w-5" />} 
-              label="Login" 
-              active={location === "/auth"} 
-            />
-            
-            <div className="col-span-2"></div>
-          </>
-        )}
+        <NavItem 
+          href="/my-runs" 
+          icon={<List className="h-5 w-5" />} 
+          label="My Runs" 
+          active={location === "/my-runs"} 
+        />
+        
+        <NavItem 
+          href="/schedule" 
+          icon={<Calendar className="h-5 w-5" />} 
+          label="Schedule" 
+          active={location === "/schedule"} 
+        />
+        
+        <NavItem 
+          href="/profile" 
+          icon={<User className="h-5 w-5" />} 
+          label="Profile" 
+          active={location === "/profile"} 
+        />
       </div>
     </div>
   );
