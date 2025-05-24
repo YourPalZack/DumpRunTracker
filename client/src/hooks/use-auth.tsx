@@ -15,6 +15,7 @@ type AuthContextType = {
   loginMutation: UseMutationResult<SelectUser, Error, LoginData>;
   logoutMutation: UseMutationResult<void, Error, void>;
   registerMutation: UseMutationResult<SelectUser, Error, InsertUser>;
+  demoLoginMutation: UseMutationResult<SelectUser, Error, void>;
 };
 
 type LoginData = Pick<InsertUser, "username" | "password">;
@@ -87,6 +88,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       toast({
         title: "Logout failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+  
+  const demoLoginMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/demo-login");
+      return await res.json();
+    },
+    onSuccess: (user: SelectUser) => {
+      queryClient.setQueryData(["/api/user"], user);
+      toast({
+        title: "Demo login successful",
+        description: `Welcome, ${user.firstName}! You are now logged in as a demo user.`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Demo login failed",
         description: error.message,
         variant: "destructive",
       });

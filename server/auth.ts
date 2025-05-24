@@ -113,4 +113,32 @@ export function setupAuth(app: Express) {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     res.json(req.user);
   });
+  
+  // Demo user login route for testing purposes
+  app.post("/api/demo-login", async (req, res, next) => {
+    try {
+      // Check if demo user exists
+      let demoUser = await storage.getUserByUsername("demouser");
+      
+      // If demo user doesn't exist, create one
+      if (!demoUser) {
+        demoUser = await storage.createUser({
+          username: "demouser",
+          password: await hashPassword("demopassword"),
+          email: "demo@example.com",
+          firstName: "Demo",
+          lastName: "User",
+          hasTruck: true
+        });
+      }
+      
+      // Log in the demo user
+      req.login(demoUser, (err) => {
+        if (err) return next(err);
+        res.status(200).json(demoUser);
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
 }
