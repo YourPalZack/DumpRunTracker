@@ -73,66 +73,66 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-neutral-800">Dashboard</h1>
-        <p className="text-neutral-600">Find or create a dump run in your area</p>
+      <div className="mb-8 animate-in">
+        <h1 className="text-4xl font-bold gradient-text mb-2">Dashboard</h1>
+        <p className="text-lg text-muted-foreground">Find or create a dump run in your area</p>
       </div>
       
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 animate-in" style={{ animationDelay: "100ms" }}>
         <Button 
           onClick={() => setIsCreateModalOpen(true)}
-          className="flex flex-col items-center justify-center h-24 bg-primary text-white hover:bg-primary/90"
+          className="flex flex-col items-center justify-center h-28 shadow-lg hover:shadow-xl transition-all duration-300 group"
+          variant="gradient"
         >
-          <Plus className="h-6 w-6 mb-2" />
-          <span className="font-medium">Create Dump Run</span>
+          <Plus className="h-8 w-8 mb-2 group-hover:scale-110 transition-transform" />
+          <span className="font-semibold text-base">Create Dump Run</span>
         </Button>
         
         <Button 
           onClick={() => setIsPickupModalOpen(true)}
-          className="flex flex-col items-center justify-center h-24 bg-orange-500 text-white hover:bg-orange-600"
+          className="flex flex-col items-center justify-center h-28 bg-gradient-to-br from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transition-all duration-300 group"
         >
-          <Truck className="h-6 w-6 mb-2" />
-          <span className="font-medium">Request Pickup</span>
+          <Truck className="h-8 w-8 mb-2 group-hover:scale-110 transition-transform" />
+          <span className="font-semibold text-base">Request Pickup</span>
         </Button>
         
         <Button 
           onClick={() => setIsPickupModalOpen(true)}
-          className="flex flex-col items-center justify-center h-24 bg-blue-500 text-white hover:bg-blue-600"
+          className="flex flex-col items-center justify-center h-28 bg-gradient-to-br from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 group"
         >
-          <Calendar className="h-6 w-6 mb-2" />
-          <span className="font-medium">Schedule Weekly</span>
+          <Calendar className="h-8 w-8 mb-2 group-hover:scale-110 transition-transform" />
+          <span className="font-semibold text-base">Schedule Weekly</span>
         </Button>
         
         <Button 
-          variant="default"
-          className="flex flex-col items-center justify-center h-24 bg-gray-800 text-white hover:bg-gray-900"
+          className="flex flex-col items-center justify-center h-28 bg-gradient-to-br from-gray-700 to-gray-900 text-white hover:from-gray-800 hover:to-black shadow-lg hover:shadow-xl transition-all duration-300 group"
         >
-          <MapPin className="h-6 w-6 mb-2" />
-          <span className="font-medium">Find Dump Sites</span>
+          <MapPin className="h-8 w-8 mb-2 group-hover:scale-110 transition-transform" />
+          <span className="font-semibold text-base">Find Dump Sites</span>
         </Button>
       </div>
       
       {/* Active & Available Runs */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-          <h2 className="text-xl font-bold text-neutral-800">Active & Available Runs</h2>
+      <div className="mb-10 animate-in" style={{ animationDelay: "200ms" }}>
+        <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
+          <h2 className="text-2xl font-bold">Active & Available Runs</h2>
           <div className="flex space-x-2 flex-wrap gap-2">
             <div className="relative">
               <Input
                 placeholder="Search by location"
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
-                className="pl-8 pr-4 py-2 text-sm"
+                className="pl-10 pr-4 py-2 text-sm w-64 glass"
               />
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+              <Search className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
             </div>
             
             <Select 
               value={filterValue} 
               onValueChange={setFilterValue}
             >
-              <SelectTrigger className="w-36">
+              <SelectTrigger className="w-40 glass">
                 <SelectValue placeholder="Filter" />
               </SelectTrigger>
               <SelectContent>
@@ -157,12 +157,14 @@ export default function HomePage() {
               />
             ))
           ) : (
-            <Card className="col-span-full">
-              <CardContent className="pt-6 text-center p-8">
-                <p className="text-neutral-600">No dump runs found with the current filters</p>
+            <Card className="col-span-full glass">
+              <CardContent className="pt-6 text-center p-12">
+                <MapPin className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
+                <p className="text-lg text-muted-foreground mb-6">No dump runs found with the current filters</p>
                 <Button 
                   onClick={() => setIsCreateModalOpen(true)}
-                  className="mt-4"
+                  variant="gradient"
+                  size="lg"
                 >
                   Create a Dump Run
                 </Button>
@@ -173,23 +175,23 @@ export default function HomePage() {
       </div>
       
       {/* Nearby Dump Sites */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold text-neutral-800 mb-4">Nearby Dump Sites</h2>
-        <Card>
-          <CardContent className="p-4">
+      <div className="mb-10 animate-in" style={{ animationDelay: "300ms" }}>
+        <h2 className="text-2xl font-bold mb-6">Nearby Dump Sites</h2>
+        <Card className="glass">
+          <CardContent className="p-6">
             <div className="mb-4">
               <Button
-                variant="default"
-                className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1.5 h-auto"
+                variant="gradient"
                 size="sm"
+                className="h-auto"
               >
                 <MapPin className="h-4 w-4 mr-2" />
                 Use Current Location
               </Button>
             </div>
             
-            <div className="aspect-w-16 aspect-h-9 mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-              <MapPin className="h-12 w-12 text-gray-400" />
+            <div className="aspect-w-16 aspect-h-9 mb-6 bg-gradient-to-br from-muted/50 to-muted rounded-xl flex items-center justify-center h-64">
+              <MapPin className="h-16 w-16 text-muted-foreground/40 animate-pulse" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -205,9 +207,9 @@ export default function HomePage() {
       </div>
       
       {/* Recent Activity */}
-      <div>
-        <h2 className="text-xl font-bold text-neutral-800 mb-4">Recent Activity</h2>
-        <Card>
+      <div className="animate-in" style={{ animationDelay: "400ms" }}>
+        <h2 className="text-2xl font-bold mb-6">Recent Activity</h2>
+        <Card className="glass">
           <CardContent className="p-0">
             <ul className="divide-y divide-gray-200">
               {activities.length > 0 ? (
@@ -218,8 +220,9 @@ export default function HomePage() {
                   />
                 ))
               ) : (
-                <li className="p-6 text-center">
-                  <p className="text-neutral-600">No recent activity</p>
+                <li className="p-8 text-center">
+                  <Calendar className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+                  <p className="text-muted-foreground">No recent activity</p>
                 </li>
               )}
             </ul>

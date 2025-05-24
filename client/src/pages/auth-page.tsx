@@ -96,13 +96,18 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-bg-subtle">
       {/* Hero Section - Right side on desktop, top on mobile */}
-      <div className="md:w-1/2 bg-gradient-to-br from-primary to-primary-dark p-8 flex items-center justify-center">
-        <div className="max-w-lg text-center text-white">
-          <div className="mb-6 flex items-center justify-center">
-            <Recycle className="h-16 w-16 text-white" />
-            <h1 className="text-4xl font-bold">DumpRun</h1>
+      <div className="md:w-1/2 gradient-bg-primary p-8 flex items-center justify-center relative overflow-hidden">
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse delay-1000" />
+        </div>
+        <div className="max-w-lg text-center text-white relative z-10 animate-in">
+          <div className="mb-6 flex items-center justify-center gap-3">
+            <Recycle className="h-16 w-16 text-white animate-spin-slow" />
+            <h1 className="text-5xl font-bold">DumpRun</h1>
           </div>
           <h2 className="text-3xl font-bold mb-4">Community-Powered Junk Removal</h2>
           <p className="text-xl mb-6">
@@ -110,19 +115,19 @@ export default function AuthPage() {
           </p>
           <div className="space-y-4">
             <div className="flex items-center">
-              <div className="p-2 bg-white bg-opacity-20 rounded-full mr-4">
+              <div className="p-3 bg-white bg-opacity-20 rounded-full mr-4 backdrop-blur-sm">
                 <Truck className="h-6 w-6" />
               </div>
               <p className="text-left">Create or join dump runs to split fees</p>
             </div>
             <div className="flex items-center">
-              <div className="p-2 bg-white bg-opacity-20 rounded-full mr-4">
+              <div className="p-3 bg-white bg-opacity-20 rounded-full mr-4 backdrop-blur-sm">
                 <Calendar className="h-6 w-6" />
               </div>
               <p className="text-left">Schedule weekly pickups for regular disposal</p>
             </div>
             <div className="flex items-center">
-              <div className="p-2 bg-white bg-opacity-20 rounded-full mr-4">
+              <div className="p-3 bg-white bg-opacity-20 rounded-full mr-4 backdrop-blur-sm">
                 <MessageCircle className="h-6 w-6" />
               </div>
               <p className="text-left">Chat with participants during active runs</p>
@@ -132,16 +137,16 @@ export default function AuthPage() {
       </div>
 
       {/* Auth Forms - Left side on desktop, bottom on mobile */}
-      <div className="md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-gray-50">
-        <div className="w-full max-w-md">
+      <div className="md:w-1/2 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-md animate-in" style={{ animationDelay: "200ms" }}>
           <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as "login" | "register")}>
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-6 glass">
+              <TabsTrigger value="login" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Login</TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Register</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
-              <Card>
+              <Card className="glass border-0 shadow-2xl card-hover">
                 <CardContent className="pt-6">
                   <Form {...loginForm}>
                     <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
@@ -197,6 +202,7 @@ export default function AuthPage() {
                       <Button 
                         type="submit" 
                         className="w-full"
+                        variant="gradient"
                         disabled={loginMutation.isPending}
                       >
                         {loginMutation.isPending ? (
@@ -213,7 +219,7 @@ export default function AuthPage() {
                         <Separator className="w-full" />
                       </div>
                       <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                        <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
                       </div>
                     </div>
                     
@@ -245,7 +251,7 @@ export default function AuthPage() {
             </TabsContent>
             
             <TabsContent value="register">
-              <Card>
+              <Card className="glass border-0 shadow-2xl card-hover">
                 <CardContent className="pt-6">
                   <Form {...registerForm}>
                     <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
@@ -400,6 +406,7 @@ export default function AuthPage() {
                       <Button 
                         type="submit" 
                         className="w-full" 
+                        variant="gradient"
                         disabled={registerMutation.isPending}
                       >
                         {registerMutation.isPending ? (

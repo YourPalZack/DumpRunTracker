@@ -30,20 +30,20 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-white shadow-sm">
+      <header className="glass sticky top-0 z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
                 <Link href="/">
-                  <a className="flex items-center">
-                    <Recycle className="text-primary mr-2 h-6 w-6" />
-                    <span className="text-xl font-bold text-primary">DumpRun</span>
+                  <a className="flex items-center group">
+                    <Recycle className="text-primary mr-2 h-7 w-7 group-hover:animate-spin-slow transition-all" />
+                    <span className="text-2xl font-bold gradient-text">DumpRun</span>
                   </a>
                 </Link>
               </div>
               
-              <nav className="hidden md:ml-6 md:flex md:space-x-8">
+              <nav className="hidden md:ml-8 md:flex md:space-x-6">
                 <NavLink href="/" active={location === "/"}>
                   <Home className="h-4 w-4 mr-1" />
                   Dashboard
@@ -66,28 +66,28 @@ export function Layout({ children }: LayoutProps) {
             <div className="flex items-center">
               <button 
                 type="button" 
-                className="p-1 rounded-full text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="p-2 rounded-lg hover:bg-muted transition-colors relative group"
               >
                 <span className="sr-only">View notifications</span>
                 <div className="relative">
-                  <Bell className="h-6 w-6" />
-                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                  <Bell className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-background animate-pulse"></span>
                 </div>
               </button>
               
               <div className="ml-3 relative">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar className="h-8 w-8">
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all">
+                      <Avatar className="h-10 w-10 shadow-md">
                         <AvatarImage src="" alt={user?.username} />
-                        <AvatarFallback className="bg-primary text-white">
+                        <AvatarFallback className="gradient-bg-primary text-white font-semibold">
                           {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="end" className="w-56 glass border-border/50 shadow-xl">
                     <div className="flex items-center justify-start gap-2 p-2">
                       <div className="flex flex-col space-y-1 leading-none">
                         <p className="font-medium">{user?.firstName} {user?.lastName}</p>
@@ -127,7 +127,7 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
       
@@ -147,13 +147,16 @@ function NavLink({ href, active, children }: NavLinkProps) {
     <Link href={href}>
       <a
         className={`
-          border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium
+          relative px-3 py-2 rounded-lg inline-flex items-center text-sm font-medium transition-all duration-200
           ${active 
-            ? 'border-primary text-neutral-900' 
-            : 'border-transparent text-neutral-600 hover:border-neutral-300 hover:text-neutral-800'}
+            ? 'text-primary bg-primary/10' 
+            : 'text-muted-foreground hover:text-foreground hover:bg-muted'}
         `}
       >
         {children}
+        {active && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+        )}
       </a>
     </Link>
   );

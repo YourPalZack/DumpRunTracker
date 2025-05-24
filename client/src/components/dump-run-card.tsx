@@ -31,7 +31,7 @@ export function DumpRunCard({
   const statusBadge = () => {
     if (isOrganizer) {
       return (
-        <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
+        <span className="bg-gradient-to-r from-primary to-primary/80 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-sm">
           Your Run
         </span>
       );
@@ -39,7 +39,7 @@ export function DumpRunCard({
     
     if (isPastRun) {
       return (
-        <span className="bg-neutral-500 text-white text-xs px-2 py-1 rounded-full">
+        <span className="bg-muted-foreground/80 text-white text-xs px-3 py-1.5 rounded-full font-medium">
           Completed
         </span>
       );
@@ -47,7 +47,7 @@ export function DumpRunCard({
     
     if (isToday(runDate)) {
       return (
-        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+        <span className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-sm animate-pulse">
           Active
         </span>
       );
@@ -55,14 +55,14 @@ export function DumpRunCard({
     
     if (isTomorrow(runDate)) {
       return (
-        <span className="bg-yellow-500 text-neutral-900 text-xs px-2 py-1 rounded-full">
+        <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-neutral-900 text-xs px-3 py-1.5 rounded-full font-medium shadow-sm">
           Tomorrow
         </span>
       );
     }
     
     return (
-      <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+      <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-sm">
         Upcoming
       </span>
     );
@@ -70,21 +70,21 @@ export function DumpRunCard({
 
   return (
     <Card className={`
-      overflow-hidden border hover:shadow-md transition duration-200
-      ${isOrganizer ? 'border-primary' : 'border-neutral-200'}
+      card-hover overflow-hidden
+      ${isOrganizer ? 'border-2 border-primary/50 shadow-primary/10' : ''}
     `}>
-      <CardContent className="p-4">
-        <div className="flex justify-between items-start mb-3">
+      <CardContent className="p-5">
+        <div className="flex justify-between items-start mb-4">
           <div>
-            <h3 className="font-semibold text-neutral-900">{dumpRun.title}</h3>
-            <p className="text-sm text-neutral-600">{dumpRun.location}</p>
+            <h3 className="font-bold text-lg">{dumpRun.title}</h3>
+            <p className="text-sm text-muted-foreground">{dumpRun.location}</p>
           </div>
           {statusBadge()}
         </div>
         
-        <div className="mb-3">
-          <div className="flex items-center text-sm mb-1">
-            <CalendarDays className="text-neutral-500 mr-2 h-4 w-4" />
+        <div className="space-y-2 mb-4">
+          <div className="flex items-center text-sm">
+            <CalendarDays className="text-muted-foreground mr-2 h-4 w-4" />
             <span>
               {isToday(runDate) 
                 ? `Today, ${format(runDate, 'h:mm a')}` 
@@ -92,8 +92,8 @@ export function DumpRunCard({
             </span>
           </div>
           
-          <div className="flex items-center text-sm mb-1">
-            <MapPin className="text-neutral-500 mr-2 h-4 w-4" />
+          <div className="flex items-center text-sm">
+            <MapPin className="text-muted-foreground mr-2 h-4 w-4" />
             <span>
               {'dumpSite' in dumpRun && dumpRun.dumpSite 
                 ? dumpRun.dumpSite.name 
@@ -102,7 +102,7 @@ export function DumpRunCard({
           </div>
           
           <div className="flex items-center text-sm">
-            <Users className="text-neutral-500 mr-2 h-4 w-4" />
+            <Users className="text-muted-foreground mr-2 h-4 w-4" />
             <span>
               {participantsCount}/{dumpRun.maxParticipants} participants
             </span>
@@ -110,8 +110,8 @@ export function DumpRunCard({
         </div>
         
         {dumpRun.description && (
-          <div className="mb-3 bg-neutral-50 p-2 rounded-md">
-            <p className="text-sm">{dumpRun.description}</p>
+          <div className="mb-4 bg-muted/50 p-3 rounded-lg">
+            <p className="text-sm text-muted-foreground">{dumpRun.description}</p>
           </div>
         )}
         
@@ -119,17 +119,17 @@ export function DumpRunCard({
           <div className="flex -space-x-2">
             {'participants' in dumpRun && dumpRun.participants ? (
               dumpRun.participants.slice(0, 3).map((participant, index) => (
-                <Avatar key={index} className="h-7 w-7 border-2 border-white">
+                <Avatar key={index} className="h-8 w-8 border-2 border-background shadow-sm">
                   <AvatarImage src="" alt={participant.user?.username} />
-                  <AvatarFallback className="bg-primary-light text-white text-xs">
+                  <AvatarFallback className="gradient-bg-primary text-white text-xs font-semibold">
                     {participant.user?.firstName?.charAt(0)}{participant.user?.lastName?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
               ))
             ) : 'organizer' in dumpRun && dumpRun.organizer ? (
-              <Avatar className="h-7 w-7 border-2 border-white">
+              <Avatar className="h-8 w-8 border-2 border-background shadow-sm">
                 <AvatarImage src="" alt={dumpRun.organizer?.username} />
-                <AvatarFallback className="bg-primary-light text-white text-xs">
+                <AvatarFallback className="gradient-bg-primary text-white text-xs font-semibold">
                   {dumpRun.organizer?.firstName?.charAt(0)}{dumpRun.organizer?.lastName?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
@@ -140,7 +140,7 @@ export function DumpRunCard({
             <Button 
               size="sm"
               onClick={onClickManage}
-              className="bg-primary hover:bg-primary/90"
+              variant="gradient"
             >
               Manage
             </Button>
@@ -167,7 +167,7 @@ export function DumpRunCard({
             <Button 
               size="sm"
               onClick={onClickJoin}
-              className="bg-blue-500 hover:bg-blue-600"
+              variant="secondary"
             >
               Join Run
             </Button>
