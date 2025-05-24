@@ -40,7 +40,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [, setLocation] = useLocation();
-  const { user, loginMutation, registerMutation } = useAuth();
+  const { user, loginMutation, registerMutation, demoLoginMutation } = useAuth();
 
   // Redirect if user is already logged in
   useEffect(() => {
@@ -85,6 +85,10 @@ export default function AuthPage() {
   const onRegisterSubmit = (values: RegisterFormValues) => {
     const { confirmPassword, terms, ...userData } = values;
     registerMutation.mutate(userData);
+  };
+  
+  const handleDemoLogin = () => {
+    demoLoginMutation.mutate();
   };
 
   if (user) {
@@ -213,7 +217,18 @@ export default function AuthPage() {
                       </div>
                     </div>
                     
-                    <div className="mt-6 grid grid-cols-3 gap-3">
+                    <Button 
+                      onClick={handleDemoLogin}
+                      className="w-full mt-3 bg-green-600 hover:bg-green-700"
+                      disabled={demoLoginMutation.isPending}
+                    >
+                      {demoLoginMutation.isPending ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : null}
+                      Try Demo Account
+                    </Button>
+                    
+                    <div className="mt-4 grid grid-cols-3 gap-3">
                       <Button variant="outline" className="w-full">
                         <FcGoogle className="h-5 w-5" />
                       </Button>
