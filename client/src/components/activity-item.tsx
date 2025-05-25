@@ -110,7 +110,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
             {activity.content}
           </p>
           <p className="text-xs text-neutral-500 mt-1">
-            {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}
+            {activity.createdAt ? formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true }) : 'Unknown time'}
           </p>
           
           {activity.type === "request_received" && !activity.isRead && (

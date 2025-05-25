@@ -186,6 +186,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/pickup-requests", authenticateUser, async (req, res) => {
     try {
       const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "User not authenticated" });
+      }
       const pickupRequests = await storage.getPickupRequestsByUser(userId);
       res.json(pickupRequests);
     } catch (error) {
@@ -197,6 +200,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/my-dump-runs", authenticateUser, async (req, res) => {
     try {
       const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "User not authenticated" });
+      }
       const dumpRuns = await storage.getUserDumpRuns(userId);
       res.json(dumpRuns);
     } catch (error) {
@@ -207,6 +213,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/my-joined-runs", authenticateUser, async (req, res) => {
     try {
       const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "User not authenticated" });
+      }
       const joinedRuns = await storage.getUserJoinedRuns(userId);
       res.json(joinedRuns);
     } catch (error) {
@@ -218,6 +227,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities", authenticateUser, async (req, res) => {
     try {
       const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "User not authenticated" });
+      }
       const activities = await storage.getUserActivities(userId);
       res.json(activities);
     } catch (error) {

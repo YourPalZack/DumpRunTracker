@@ -435,7 +435,7 @@ export function DumpRunDetailModal({ dumpRunId, onClose }: DumpRunDetailModalPro
                           </p>
                           <p className="text-sm">{message.message}</p>
                           <p className="text-xs text-neutral-500 mt-1">
-                            {format(new Date(message.createdAt), 'h:mm a')}
+                            {message.createdAt ? format(new Date(message.createdAt), 'h:mm a') : 'Unknown time'}
                           </p>
                         </div>
                       </div>

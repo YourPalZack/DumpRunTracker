@@ -5,6 +5,7 @@ import {
 } from "@shared/schema";
 import createMemoryStore from "memorystore";
 import session from "express-session";
+import type { SessionStore } from "express-session";
 
 const MemoryStore = createMemoryStore(session);
 
@@ -12,7 +13,7 @@ const MemoryStore = createMemoryStore(session);
 // you might need
 export interface IStorage {
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: SessionStore;
   
   // User methods
   getUser(id: number): Promise<User | undefined>;
@@ -64,7 +65,7 @@ export class MemStorage implements IStorage {
   private chatMessages: Map<number, ChatMessage>;
   private activities: Map<number, Activity>;
   
-  sessionStore: session.SessionStore;
+  sessionStore: SessionStore;
   
   private userIdCounter: number;
   private dumpSiteIdCounter: number;
@@ -119,7 +120,18 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userIdCounter++;
     const now = new Date();
-    const user: User = { ...insertUser, id, createdAt: now };
+    const user: User = {
+      id,
+      email: insertUser.email,
+      username: insertUser.username,
+      password: insertUser.password,
+      firstName: insertUser.firstName,
+      lastName: insertUser.lastName,
+      phone: insertUser.phone ?? null,
+      hasTruck: insertUser.hasTruck ?? null,
+      profileImageUrl: insertUser.profileImageUrl ?? null,
+      createdAt: now
+    };
     this.users.set(id, user);
     return user;
   }
@@ -128,7 +140,20 @@ export class MemStorage implements IStorage {
   async createDumpSite(site: InsertDumpSite): Promise<DumpSite> {
     const id = this.dumpSiteIdCounter++;
     const now = new Date();
-    const dumpSite: DumpSite = { ...site, id, createdAt: now };
+    const dumpSite: DumpSite = {
+      id,
+      name: site.name,
+      address: site.address,
+      phone: site.phone ?? null,
+      latitude: site.latitude ?? null,
+      longitude: site.longitude ?? null,
+      operatingHours: site.operatingHours ?? null,
+      minFee: site.minFee ?? null,
+      feePerTon: site.feePerTon ?? null,
+      acceptsElectronics: site.acceptsElectronics ?? null,
+      acceptsHazardousWaste: site.acceptsHazardousWaste ?? null,
+      createdAt: now
+    };
     this.dumpSites.set(id, dumpSite);
     return dumpSite;
   }
@@ -145,7 +170,18 @@ export class MemStorage implements IStorage {
   async createDumpRun(run: InsertDumpRun): Promise<DumpRun> {
     const id = this.dumpRunIdCounter++;
     const now = new Date();
-    const dumpRun: DumpRun = { ...run, id, createdAt: now };
+    const dumpRun: DumpRun = {
+      id,
+      title: run.title,
+      location: run.location,
+      date: run.date,
+      organizerId: run.organizerId,
+      status: run.status ?? 'open',
+      description: run.description ?? null,
+      dumpSiteId: run.dumpSiteId ?? null,
+      maxParticipants: run.maxParticipants ?? 5,
+      createdAt: now
+    };
     this.dumpRuns.set(id, dumpRun);
     return dumpRun;
   }

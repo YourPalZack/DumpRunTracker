@@ -240,6 +240,7 @@ export function CreateDumpRunModal({ onClose, dumpSites }: CreateDumpRunModalPro
                       placeholder="Describe what type of items you'll be dumping, space constraints, fee split details, etc."
                       rows={3}
                       {...field}
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />

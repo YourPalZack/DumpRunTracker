@@ -185,7 +185,7 @@ export default function AuthPage() {
                             <FormItem className="flex items-center space-x-2">
                               <FormControl>
                                 <Checkbox
-                                  checked={field.value}
+                                  checked={field.value ?? false}
                                   onCheckedChange={field.onChange}
                                 />
                               </FormControl>
@@ -319,7 +319,7 @@ export default function AuthPage() {
                           <FormItem>
                             <FormLabel>Phone Number</FormLabel>
                             <FormControl>
-                              <Input placeholder="(555) 123-4567" {...field} />
+                              <Input placeholder="(555) 123-4567" {...field} value={field.value ?? ''} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

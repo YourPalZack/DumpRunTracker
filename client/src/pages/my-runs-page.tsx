@@ -4,7 +4,7 @@ import { Layout } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DumpRunWithDetails } from "@shared/schema";
+import { DumpRunWithDetails, DumpSite } from "@shared/schema";
 import { DumpRunCard } from "@/components/dump-run-card";
 import { useAuth } from "@/hooks/use-auth";
 import { CreateDumpRunModal } from "@/components/modals/create-dump-run-modal";
@@ -38,7 +38,7 @@ export default function MyRunsPage() {
   // Fetch dump sites for the create modal
   const {
     data: dumpSites = [],
-  } = useQuery({
+  } = useQuery<DumpSite[]>({
     queryKey: ["/api/dump-sites"],
   });
 

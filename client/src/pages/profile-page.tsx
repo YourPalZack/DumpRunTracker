@@ -172,7 +172,7 @@ export default function ProfilePage() {
                       </div>
                       
                       <div className="flex items-center space-x-2">
-                        <Switch id="hasTruck" defaultChecked={user?.hasTruck} />
+                        <Switch id="hasTruck" defaultChecked={user?.hasTruck ?? false} />
                         <Label htmlFor="hasTruck">I have a truck/vehicle for transportation</Label>
                       </div>
                       

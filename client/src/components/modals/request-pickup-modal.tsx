@@ -20,8 +20,14 @@ interface RequestPickupModalProps {
   onClose: () => void;
 }
 
-const requestPickupFormSchema = insertPickupRequestSchema.omit({ userId: true, createdAt: true, estimatedPrice: true }).extend({
+const requestPickupFormSchema = z.object({
+  address: z.string().min(1, "Address is required"),
   date: z.string().min(1, "Date is required"),
+  timeSlot: z.string(),
+  itemSize: z.string(),
+  itemDescription: z.string().nullable(),
+  specialInstructions: z.string().nullable(),
+  status: z.string(),
 });
 
 type RequestPickupFormValues = z.infer<typeof requestPickupFormSchema>;
@@ -233,6 +239,7 @@ export function RequestPickupModal({ onClose }: RequestPickupModalProps) {
                       placeholder="Describe the items you need picked up"
                       rows={3}
                       {...field}
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />
@@ -251,6 +258,7 @@ export function RequestPickupModal({ onClose }: RequestPickupModalProps) {
                       placeholder="Any access instructions or other notes"
                       rows={2}
                       {...field}
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormMessage />
